@@ -170,6 +170,15 @@ FunctionReadItemFromClipboard() {
 	; Strip out extra CR chars
 	StringReplace RawItemData, ClipBoardData, `r, , A
 
+	; Makes it work when someone else links an item
+	SecLine = %data2%
+	Control = <<set:MS>><<set:M>><<set:S>>
+	IfInString, SecLine, %Control%
+	{
+	StringTrimLeft, data2, data2, 28
+	}
+	ItemName = %data2%
+
 	; If the first line on the clipboard has Rarity: it is probably some item
 	; information from POE, so we'll send it to my server to process. Otherwise
 	; we just don't do anything at all.
